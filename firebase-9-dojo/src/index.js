@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore, onSnapshot, collection,
-  addDoc, deleteDoc, doc
+  addDoc, deleteDoc, doc,
+  query, where
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -22,8 +23,11 @@ const db = getFirestore();
 // collection ref
 const colRef = collection(db, 'books');
 
+// queries
+const q = query(colRef, where("author", '==', 'rendo'))
+
 // real-time collection data
-onSnapshot(colRef, (snapshot) => {
+onSnapshot(q, (snapshot) => {
   let books = [];
   snapshot.docs.forEach((doc) => { 
     books.push({
@@ -47,7 +51,7 @@ addBookForm.addEventListener('submit', (e) => {
   .then(() => {
     addBookForm.reset()
   })
-})
+});
 
 // deleting docs
 const deleteBookForm = document.querySelector('.delete')
