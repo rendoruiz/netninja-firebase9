@@ -60,4 +60,4 @@ deleteBookForm.addEventListener('submit', (e) => {
     .then(() => {
       deleteBookForm.reset()
     })
-})
+});
